@@ -1,0 +1,25 @@
+# demo 1
+conda create -n image_processing_env python=3.8
+conda activate image_processing_env
+conda install -c conda-forge pandas scikit-learn matplotlib numpy pillow tensorflow
+conda install -c anaconda ipykernel
+python -m ipykernel install --user --name=image_processing_env --display-name "Python (image_processing_env)"
+
+# demo 2
+# Step 1: Create the Conda environment
+conda create -n svm_image_env python=3.8
+
+# Step 2: Activate the Conda environment
+conda activate svm_image_env
+
+# Step 3: Install required libraries
+conda install -c conda-forge numpy matplotlib opencv jupyter
+
+# Step 4: Install ipykernel in the environment
+conda install -c anaconda ipykernel
+
+# Step 5: Add the environment as a Jupyter kernel
+python -m ipykernel install --user --name=svm_image_env --display-name "Python (svm_image_env)"
+
+# Step 6: Launch Jupyter Notebook
+jupyter notebook
