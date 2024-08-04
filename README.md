@@ -1,5 +1,5 @@
 
-# 🧬 CCIR Program: Advanced Biomedical Imaging and Deep Learning 🧬
+# 🧬 CCIR Program: Advanced Biomedical Imaging and Deep Learning Demos 🧬
 
 [![Python](https://img.shields.io/badge/Python-3.8%2C%203.10-blue)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
@@ -78,7 +78,7 @@ pip install -e .
 
 **Description**: An updated version of the Segment Anything Model (SAM v2) for enhanced image segmentation capabilities.
 
-**Code**: Coming Soon
+**Code**: [predictor_example.ipynb](scrit_code_4/predictor_example.ipynb)
 
 **Environment Setup**:
 ```bash
