@@ -1,11 +1,13 @@
-# demo 1
+# script code 1
 conda create -n image_processing_env python=3.8
 conda activate image_processing_env
 conda install -c conda-forge pandas scikit-learn matplotlib numpy pillow tensorflow
 conda install -c anaconda ipykernel
 python -m ipykernel install --user --name=image_processing_env --display-name "Python (image_processing_env)"
 
-# demo 2
+
+
+# script code 2
 # Step 1: Create the Conda environment
 conda create -n svm_image_env python=3.8
 
@@ -23,3 +25,29 @@ python -m ipykernel install --user --name=svm_image_env --display-name "Python (
 
 # Step 6: Launch Jupyter Notebook
 jupyter notebook
+
+
+
+# script code 3
+conda create -n medsam python=3.10 -y
+conda activate medsam
+pip3 install torch torchvision torchaudio
+cd script_code_3
+pip install -e .
+
+# script code 4
+conda create -n medsam2d python=3.10 -y
+conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
+conda install numpy
+pip install opencv-python matplotlib
+pip install 'git+https://github.com/facebookresearch/segment-anything.git'
+conda install -c anaconda ipykernel
+python -m ipykernel install --user --name=medsam2d --display-name "Python (medsam2d)"
+pip install pydrive
+pip install albumentations
+pip install -U numpy
+conda update albumentations scipy scikit-image
+conda install -c conda-forge cupy
+
+
+# script code 5

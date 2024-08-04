@@ -1,0 +1,8 @@
+script_code_1: Train a model for classifying tissue samples into benign vs malign using Deep Learning Architecture
+code: script_dem_1.ipynb
+script_code_2:Train a model for classifying tissue samples into benign vs malign using HOGs features and Machine Larning Classifier
+code: script_dem_2.ipynb
+script_code_3: Segmentate anything (SAM v1)
+code: gui.py
+script_code_4: Segmentate anything (SAM v2)
+script_code_5: Foundation Model for Cancer IMage biomarker (CT Images) from AIM-Hardvard
