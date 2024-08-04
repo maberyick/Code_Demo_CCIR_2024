@@ -62,6 +62,8 @@ pip install -U "huggingface_hub[cli]"
 huggingface-cli download surajpaib/fmcib --local-dir '/mnt/movs/Downloads/pretrain_model/'
 # Or from here
 https://zenodo.org/records/10528450/files/model_weights.torch?download=1
-
+# page for the model deployment
+# https://aim-harvard.github.io/foundation-cancer-image-biomarker/replication-guide/data/#downloading-the-datasets
+# https://aim-harvard.github.io/foundation-cancer-image-biomarker/getting-started/quick-start/
 
 lighter predict --config_file ./experiments/inference/get_predictions.yaml
