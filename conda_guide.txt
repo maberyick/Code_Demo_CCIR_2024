@@ -35,8 +35,9 @@ pip3 install torch torchvision torchaudio
 cd script_code_3
 pip install -e .
 
-# script code 4
+# script code 4 (https://github.com/OpenGVLab/SAM-Med2D/tree/main)
 conda create -n medsam2d python=3.10 -y
+conda activate medsam2d
 conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
 conda install numpy
 pip install opencv-python matplotlib
@@ -50,4 +51,17 @@ conda update albumentations scipy scikit-image
 conda install -c conda-forge cupy
 
 
-# script code 5
+# script code 5 (https://github.com/AIM-Harvard/foundation-cancer-image-biomarker)
+conda create -n foundation_model_ct python=3.8
+conda activate foundation_model_ct
+pip install foundation-cancer-image-biomarker
+cd /mnt/Data1/GitHub/Code_Demo_CCIR_2024/script_code_5/
+pip install -r additional_requirements.txt
+pip install -U "huggingface_hub[cli]"
+# Download from here
+huggingface-cli download surajpaib/fmcib --local-dir '/mnt/movs/Downloads/pretrain_model/'
+# Or from here
+https://zenodo.org/records/10528450/files/model_weights.torch?download=1
+
+
+lighter predict --config_file ./experiments/inference/get_predictions.yaml

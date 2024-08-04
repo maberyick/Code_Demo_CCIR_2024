@@ -1,0 +1,99 @@
+trainer:
+    _target_: pytorch_lightning.Trainer
+    benchmark: True
+    max_epochs: 100
+    check_val_every_n_epoch: 4
+    accelerator: cpu
+    devices: 1
+    log_every_n_steps: 50
+    logger: False
+    callbacks:
+        - _target_: fmcib.callbacks.SavePredictions
+          path: "/mnt/Data1/GitHub/Code_Demo_CCIR_2024/script_code_5/predictions/feats.csv" # Note: Change path to the CSV file to save predictions to.
+          save_preview_samples: 5
+system:
+    _target_: lighter.LighterSystem
+    batch_size: 32
+    pin_memory: True
+    num_workers: 6
+    model:
+        _target_: fmcib.models.LoadModel
+        trunk: # Note: If changing the model, change the trunk to the corresponding model.
+            _target_: monai.networks.nets.resnet50
+            widen_factor: 2
+            n_input_channels: 1
+            feed_forward: False
+        weights_path: "/mnt/movs/Downloads/pretrain_model/models/pretrained/fmcib/model_weights.torch" # Note: Change path to the model weights file.
+
+        #### Note: Use the below config for Med3D
+        # trunk:
+        #   _target_: monai.networks.nets.resnet50
+        #   widen_factor: 1
+        #   bias_downsample: False
+        #   n_input_channels: 1
+        #   conv1_t_stride: 1
+        #   feed_forward: False
+        #   pretrained: False
+        # weights_path: "./models/pretrained/med3d/resnet_50.pth"
+
+
+        #### Note: Use the below config for Models Genesis
+        # trunk:
+        #   _target_: fmcib.models.ModelsGenesisUNet3D
+        #   decoder: False
+        # weights_path: ./models/pretrained/models_genesis/Genesis_Chest_CT.pt
+
+
+
+    criterion: null
+    optimizer: null
+    scheduler: null
+    datasets:
+        train: null
+        val: null
+        test: null
+        predict:
+            _target_: fmcib.datasets.SSLRadiomicsDataset
+            path: "./data/preprocessing/deeplesion/annotations/task1_test.csv" # Note: Change path to the CSV file to extract features from.
+            label: "Coarse_lesion_type" # Note: Change the label to "malignancy" for task 2 and "survival" for task 3
+            radius: 25 # Note: Change to 24 for Models Genesis
+            orient: True # Note: Set orient to False for task 2 and task 3
+            resample_spacing: [1, 1, 1]
+            enable_negatives: False
+            transform:
+                _target_: monai.transforms.Compose
+                transforms:
+                    - _target_: monai.transforms.ToTensor
+                    - _target_: monai.transforms.EnsureChannelFirst
+                      channel_dim: no_channel
+                    - _target_: monai.transforms.NormalizeIntensity
+                      subtrahend: -1024
+                      divisor: 3072
+                    - _target_: monai.transforms.SpatialPad
+                      spatial_size: [50, 50, 50]
+
+            # transforms: #### Note: Uncomment this `transforms` and comment the above `transforms` for Med3D
+            #     - _target_: monai.transforms.ScaleIntensityRange
+            #       a_min: -1000
+            #       a_max: 1000
+            #       b_min: 0.0
+            #       b_max: 1.0
+            #       clip: True
+            #     - _target_: monai.transforms.ToTensor
+            #     - _target_: monai.transforms.AddChannel
+            #     - _target_: monai.transforms.SpatialPad
+            #       spatial_size: [50, 50, 50]
+
+            # transforms: #### Note: Uncomment this `transforms` and comment the above `transforms` for Models Genesis
+            #     - _target_: monai.transforms.Transpose ## Only for Models Genesis
+            #       indices: [2, 1, 0]
+            #     - _target_: monai.transforms.ToTensor
+            #     - _target_: monai.transforms.AddChannel
+            #     - _target_: monai.transforms.SpatialPad
+            #       spatial_size: [48, 48, 48]
+            #     - _target_: monai.transforms.ScaleIntensityRange
+            #       a_min: -1000
+            #       a_max: 1000
+            #       b_min: 0.0
+            #       b_max: 1.0
+            #       clip: True
