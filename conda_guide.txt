@@ -64,6 +64,8 @@ huggingface-cli download surajpaib/fmcib --local-dir '/mnt/movs/Downloads/pretra
 https://zenodo.org/records/10528450/files/model_weights.torch?download=1
 # page for the model deployment
 # https://aim-harvard.github.io/foundation-cancer-image-biomarker/replication-guide/data/#downloading-the-datasets
-# https://aim-harvard.github.io/foundation-cancer-image-biomarker/getting-started/quick-start/
+# h# github
+https://github.com/AIM-Harvard/foundation-cancer-image-biomarker/tree/master
+# ttps://aim-harvard.github.io/foundation-cancer-image-biomarker/getting-started/quick-start/
 
 lighter predict --config_file ./experiments/inference/get_predictions.yaml
