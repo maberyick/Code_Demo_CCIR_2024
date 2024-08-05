@@ -95,6 +95,7 @@ pip install albumentations
 pip install -U numpy
 conda update albumentations scipy scikit-image
 conda install -c conda-forge cupy
+# download model from here: https://zenodo.org/records/10528450/files/model_weights.torch?download=1
 ```
 
 ### Script Code 5: Foundation Model for Cancer Imaging Biomarker (CT Images)
