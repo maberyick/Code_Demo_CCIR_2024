@@ -78,7 +78,7 @@ pip install -e .
 
 **Description**: An updated version of the Segment Anything Model (SAM v2) for enhanced image segmentation capabilities.
 
-**Code**: [predictor_example.ipynb](scrit_code_4/predictor_example.ipynb)
+**Code**: [predictor_example.ipynb](script_code_4/predictor_example.ipynb)
 
 **Environment Setup**:
 ```bash
