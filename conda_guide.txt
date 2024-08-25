@@ -69,3 +69,13 @@ https://github.com/AIM-Harvard/foundation-cancer-image-biomarker/tree/master
 # ttps://aim-harvard.github.io/foundation-cancer-image-biomarker/getting-started/quick-start/
 
 lighter predict --config_file ./experiments/inference/get_predictions.yaml
+
+
+# conda env for script 7
+conda create -n cycleGAN_env python=3.9
+conda activate cycleGAN_env
+conda install tensorflow pillow scikit-image matplotlib
+conda install scikit-learn
+pip install tqdm
+conda install -c conda-forge jupyter ipykernel
+python -m ipykernel install --user --name=cycleGAN_env --display-name "CycleGAN Env"
