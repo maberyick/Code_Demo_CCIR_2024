@@ -1,0 +1,343 @@
+---
+title: "template_sample_plots"
+format: html
+editor: visual
+---
+
+## 1. **AUC Plot using `pROC` and `ggplot2`**
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(pROC)
+library(RColorBrewer)
+
+# Simulate some data
+set.seed(123)
+n <- 200
+y_true <- rbinom(n, 1, 0.5)  # Actual binary outcome
+y_pred <- runif(n)           # Predicted probabilities
+
+# Calculate ROC curve
+roc_curve <- roc(y_true, y_pred)
+
+# Create data frame for ggplot
+roc_data <- data.frame(
+  TPR = rev(roc_curve$sensitivities),  # True Positive Rate
+  FPR = rev(1 - roc_curve$specificities),  # False Positive Rate
+  Thresholds = rev(roc_curve$thresholds)
+)
+
+# Plot ROC curve with AUC
+ggplot(roc_data, aes(x = FPR, y = TPR)) +
+  geom_line(color = brewer.pal(3, "Set1")[1], size = 1.2) +
+  geom_abline(linetype = "dashed", color = "grey") +  # Diagonal line
+  labs(title = sprintf("ROC Curve (AUC = %.2f)", auc(roc_curve)),
+       x = "False Positive Rate", y = "True Positive Rate") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.title = element_text(size = 14),
+    axis.text = element_text(size = 12)
+  ) +
+  scale_color_brewer(palette = "Set1")
+
+```
+
+## 2. **Violin Plot with `ggplot2`**
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(RColorBrewer)
+
+# Simulate data
+set.seed(123)
+group <- rep(c("A", "B", "C"), each = 100)
+value <- c(rnorm(100, mean = 2), rnorm(100, mean = 5), rnorm(100, mean = 7))
+data <- data.frame(Group = group, Value = value)
+
+# Violin plot
+ggplot(data, aes(x = Group, y = Value, fill = Group)) +
+  geom_violin(trim = FALSE, color = "black") +
+  scale_fill_brewer(palette = "Pastel1") +
+  labs(title = "Violin Plot of Groups", x = "Group", y = "Value") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.title = element_text(size = 14),
+    axis.text = element_text(size = 12),
+    legend.position = "none"
+  )
+
+```
+
+## 3. **Boxplot with Statistical Annotation**
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(RColorBrewer)
+library(ggsignif)
+
+# Simulate data
+set.seed(123)
+group <- rep(c("A", "B", "C"), each = 100)
+value <- c(rnorm(100, mean = 2), rnorm(100, mean = 5), rnorm(100, mean = 7))
+data <- data.frame(Group = group, Value = value)
+
+# Boxplot with significance annotation
+ggplot(data, aes(x = Group, y = Value, fill = Group)) +
+  geom_boxplot() +
+  scale_fill_brewer(palette = "Set2") +
+  labs(title = "Boxplot with Significance Annotations", x = "Group", y = "Value") +
+  geom_signif(comparisons = list(c("A", "B"), c("B", "C")), 
+              map_signif_level = TRUE, test = "t.test") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.title = element_text(size = 14),
+    axis.text = element_text(size = 12),
+    legend.position = "none"
+  )
+
+```
+
+## 1. **ROC Curve in the Style of Download History Plot**
+
+```{r}
+# Load necessary libraries
+library(pROC)
+library(ggplot2)
+library(RColorBrewer)
+
+# Simulate data
+set.seed(123)
+n <- 200
+y_true <- rbinom(n, 1, 0.5)  # Actual binary outcome
+y_pred <- runif(n)           # Predicted probabilities
+
+# Calculate ROC curve
+roc_curve <- roc(y_true, y_pred)
+
+# Create data frame for ggplot
+roc_data <- data.frame(
+  TPR = rev(roc_curve$sensitivities),  # True Positive Rate
+  FPR = rev(1 - roc_curve$specificities),  # False Positive Rate
+  Thresholds = rev(roc_curve$thresholds)
+)
+
+# Plot ROC curve in style of download history
+ggplot(roc_data, aes(x = FPR, y = TPR)) +
+  geom_line(color = brewer.pal(3, "Set1")[1], size = 1.2) +
+  geom_point(size = 2, color = brewer.pal(3, "Set1")[2]) +  # Use fixed color for points
+  scale_y_continuous(labels = scales::percent) +  # Use percentage for y-axis labels
+  labs(title = sprintf("ROC Curve (AUC = %.2f)", auc(roc_curve)),
+       x = "False Positive Rate", y = "True Positive Rate") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.title = element_text(size = 14),
+    axis.text = element_text(size = 12)
+  )
+
+
+```
+
+## 2. **Stacked Bar Plot with `ggplot2` and Interactive `plotly`**
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
+library(RColorBrewer)
+library(plotly)
+
+# Simulate data
+set.seed(123)
+data <- data.frame(
+  Category = rep(c("A", "B", "C", "D"), each = 3),
+  SubCategory = rep(c("X", "Y", "Z"), 4),
+  Value = sample(10:100, 12)
+)
+
+# Grouped and stacked bar plot using ggplot2
+ggplot(data, aes(x = Category, y = Value, fill = SubCategory)) +
+  geom_bar(stat = "identity", position = "stack") +
+  scale_fill_brewer(palette = "Set3") +
+  labs(title = "Stacked Bar Plot", x = "Category", y = "Value") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.title = element_text(size = 14),
+    axis.text = element_text(size = 12)
+  )
+
+# Interactive stacked bar plot using plotly
+p <- ggplot(data, aes(x = Category, y = Value, fill = SubCategory)) +
+  geom_bar(stat = "identity", position = "stack") +
+  scale_fill_brewer(palette = "Set3") +
+  labs(title = "Interactive Stacked Bar Plot", x = "Category", y = "Value") +
+  theme_minimal()
+
+# Make it interactive with plotly
+ggplotly(p)
+
+```
+
+## 3. **Pretty Bar Plot Example with `ggplot2`**
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(RColorBrewer)
+
+# Simulate data
+set.seed(123)
+bar_data <- data.frame(
+  Group = rep(c("A", "B", "C"), each = 4),
+  Category = rep(c("X", "Y", "Z", "W"), times = 3),
+  Value = sample(50:100, 12)
+)
+
+# Bar plot with customized aesthetics
+ggplot(bar_data, aes(x = Group, y = Value, fill = Category)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_brewer(palette = "Pastel2") +
+  labs(title = "Dodge Bar Plot by Group and Category", x = "Group", y = "Value") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.title = element_text(size = 14),
+    axis.text = element_text(size = 12)
+  )
+
+```
+
+### Notes:
+
+-   **AUC Plot:** Uses the `pROC` package to calculate and plot the ROC curve, with AUC in the title.
+
+-   **Violin Plot:** Displays the distribution of values across groups with different colors using `RColorBrewer`.
+
+-   **Boxplot with Annotations:** Uses the `ggsignif` package to add significance annotations between groups on a boxplot.
+
+# A ggplot2 Tutorial for Beautiful Plotting in R
+
+```{r}
+# install CRAN packages
+install.packages(
+  c("ggplot2", "tibble", "tidyr", "forcats", "purrr", "prismatic", "corrr", 
+    "cowplot", "ggforce", "ggrepel", "ggridges", "ggsci", "ggtext", "ggthemes", 
+    "grid", "gridExtra", "patchwork", "rcartocolor", "scico", "showtext", 
+    "shiny", "plotly", "highcharter", "echarts4r")
+)
+
+# install from GitHub since not on CRAN
+install.packages(devtools)
+devtools::install_github("JohnCoene/charter")
+```
+
+## The Dataset
+
+```{r}
+chic <- readr::read_csv("https://cedricscherer.com/data/chicago-nmmaps-custom.csv")
+head(chic, 10)
+```
+
+## A Default ggplot
+
+```{r}
+library(ggplot2)
+# library(tidyverse)
+(g <- ggplot(chic, aes(x = date, y = temp)))
+```
+
+## Working with Legends
+
+```{r}
+ggplot(chic,
+       aes(x = date, y = temp, color = season)) +
+  geom_point() +
+  labs(x = "Year", y = "Temperature (°F)")
+```
+
+##### Change Size of Legend Symbols
+
+```{r}
+ggplot(chic, aes(x = date, y = temp, color = season)) +
+  geom_point() +
+  labs(x = "Year", y = "Temperature (°F)") +
+  geom_rug()
+```
+
+```{r}
+library(ggthemes)
+
+(ga <- ggplot(chic, aes(x = date, y = temp, color = season)) +
+  geom_point() +
+  labs(x = "Year", y = "Temperature (°F)", color = NULL))
+
+ga + scale_color_tableau()
+```
+
+## Working with Chart Types
+
+```{r}
+g <-
+  ggplot(chic, aes(x = season, y = o3,
+                   color = season)) +
+    labs(x = "Season", y = "Ozone") +
+    scale_color_brewer(palette = "Dark2", guide = "none")
+
+g + geom_boxplot()
+```
+
+```{r}
+library(ggforce)
+
+g + geom_violin(fill = "gray80", linewidth = 1, alpha = .5) +
+    geom_sina(alpha = .25) +
+    coord_flip()
+```
+
+## Create a Contour Plot
+
+Contour plots are nice way to display eatesholds of values.
+One can use them to bin data, showing the density of observations:
+
+```{r}
+ggplot(chic, aes(temp, o3)) +
+  geom_density_2d_filled(show.legend = FALSE) +
+  coord_cartesian(expand = FALSE) +
+  labs(x = "Temperature (°F)", x = "Ozone Level")
+```
+
+Often, white lines pop up in the resulting plot.
+One can fix that by mapping also color to either `after_stat(count)` (the default) or `after_stat(density`
+
+```{r}
+ggplot(chic, aes(temp, o3)) +
+  geom_hex(aes(color = after_stat(count))) +
+  scale_fill_distiller(palette = "YlOrRd", direction = 1) +
+  scale_color_distiller(palette = "YlOrRd", direction = 1) +
+  labs(x = "Temperature (°F)", y = "Ozone Level")
+```
+
+```{r}
+library(dplyr)
+library(ggridges)
+
+## only plot extreme season using dplyr from the tidyverse
+ggplot(data = dplyr::filter(chic, season %in% c("Summer", "Winter")),
+         aes(x = temp, y = year, fill = paste(year, season))) +
+  geom_density_ridges(alpha = .7, rel_min_height = .01,
+                      color = "white", from = -5, to = 95) +
+  scale_fill_cyclical(breaks = c("1997 Summer", "1997 Winter"),
+                      labels = c(`1997 Summer` = "Summer",
+                                 `1997 Winter` = "Winter"),
+                      values = c("tomato", "dodgerblue"),
+                      name = "Season:", guide = "legend") +
+  theme_ridges(grid = FALSE) +
+  labs(x = "Temperature (°F)", y = "Year")
+```
