@@ -130,6 +130,18 @@ lighter predict --config_file ./experiments/inference/get_predictions.yaml
 
 ### Script Code 7: Another Homework on Deep Learning (Coming Soon)
 
+### Script Code 8: Data Visualization with R (ROC Curves & Stacked Bar Plots)
+
+**Description**: This script creates ROC curve and stacked bar plots using `ggplot2` and `RColorBrewer` to showcase model performance and categorical comparisons.
+
+**Code**: [template_sample_plots.qmd](script_code_8/template_sample_plots.qmd)
+
+**Environment Setup**:
+```r
+# Install required R packages
+install.packages(c("ggplot2", "pROC", "RColorBrewer", "scales", "dplyr"))
+
+
 ## Installation and Setup
 
 Follow the environment setup instructions provided for each script to install the necessary dependencies and create the required Conda environments.
