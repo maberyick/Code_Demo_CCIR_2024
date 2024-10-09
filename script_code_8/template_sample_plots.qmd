@@ -303,8 +303,7 @@ g + geom_violin(fill = "gray80", linewidth = 1, alpha = .5) +
 
 ## Create a Contour Plot
 
-Contour plots are nice way to display eatesholds of values.
-One can use them to bin data, showing the density of observations:
+Contour plots are nice way to display eatesholds of values. One can use them to bin data, showing the density of observations:
 
 ```{r}
 ggplot(chic, aes(temp, o3)) +
@@ -313,8 +312,7 @@ ggplot(chic, aes(temp, o3)) +
   labs(x = "Temperature (°F)", x = "Ozone Level")
 ```
 
-Often, white lines pop up in the resulting plot.
-One can fix that by mapping also color to either `after_stat(count)` (the default) or `after_stat(density`
+Often, white lines pop up in the resulting plot. One can fix that by mapping also color to either `after_stat(count)` (the default) or `after_stat(density`
 
 ```{r}
 ggplot(chic, aes(temp, o3)) +
